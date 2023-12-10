@@ -1,10 +1,10 @@
 -- Archit Jaiswal
--- Entity: Kernal Buffer 128 elements (16 bit each)
+-- Entity: kernel Buffer 128 elements (16 bit each)
 --         It is basically just the inverted version of signal buffer
 
 -- Functionality: 
 
--- It reads the inputs from the memory map. The software that interfaces with the memory map will give it a padded kernal signal, so there is not need to add any extra zeros to it. 
+-- It reads the inputs from the memory map. The software that interfaces with the memory map will give it a padded kernel signal, so there is not need to add any extra zeros to it. 
 
 -- Just read the inputs from memory map as it is and flip the elements such that the last element becomes the first element and so on. 
 
@@ -12,12 +12,12 @@
 
 ----------------------------------------------------------------------------------
 
----------------------- KERNAL BUFFER Entity --------------------------------------
+---------------------- KERNEL BUFFER Entity --------------------------------------
 
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity kernal_buffer is
+entity kernel_buffer is
     generic (NUM_ELEMENTS: integer          := 128; -- Number of elements in the buffer
              WIDTH:        integer          := 16;
              RESET_VALUE:  std_logic_vector := ""); -- Number of bits in each element
@@ -31,9 +31,9 @@ entity kernal_buffer is
         empty : out std_logic;
         full : out std_logic
     );
-end kernal_buffer;
+end kernel_buffer;
 
-architecture BHV of kernal_buffer is
+architecture BHV of kernel_buffer is
 
     component signal_buffer
         generic (NUM_ELEMENTS: integer; -- Number of elements in the buffer
@@ -49,7 +49,7 @@ architecture BHV of kernal_buffer is
             empty   : out std_logic; 
             full    : out std_logic
         );
-    end component; -- Need to flip the output because kernal elements should be reversed as it goes to the pipeline
+    end component; -- Need to flip the output because kernel elements should be reversed as it goes to the pipeline
 
     signal signal_buffer_output_vector : std_logic_vector(rd_data'range); -- Stores the unreversed output from signal_buffer
 
